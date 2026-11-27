@@ -8,7 +8,7 @@
 (() => {
   "use strict";
 
-  const DATA_URL = "data/dictionary.json";
+  const DATA_URL = "data/dictionary.json?v=e12f9ef51b";
   const LANGS = ["ru", "en", "de", "lt", "lv", "pl"];
   const LANGSET = new Set(LANGS);
 
