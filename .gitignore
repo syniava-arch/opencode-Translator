@@ -1,0 +1,10 @@
+.DS_Store
+__pycache__/
+*.pyc
+server.log
+site/
+data/dictionary.sqlite
+data/words.csv
+data/forms.csv
+data/full.nvh
+data/wordlist.json

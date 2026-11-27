@@ -7,6 +7,7 @@ search, inflection lookup and glossing in the browser. The JSON is ~8.7 MB
 (25 MiB per file) with plenty of room.
 
     python3 scripts/build_static.py
+    python3 scripts/build_static.py --out .   # собрать прямо в корень репозитория
     cd site && python3 -m http.server 8080
 """
 from __future__ import annotations
@@ -73,6 +74,12 @@ def main() -> int:
     payload = build_payload()
 
     site = HERE / "site"
+    args = sys.argv[1:]
+    if "--out" in args:
+        i = args.index("--out")
+        if i + 1 >= len(args):
+            raise SystemExit("--out requires a directory")
+        site = Path(args[i + 1]).expanduser().resolve()
     data = site / "data"
     data.mkdir(parents=True, exist_ok=True)
 
@@ -85,7 +92,7 @@ def main() -> int:
     (site / ".nojekyll").write_text("", encoding="utf-8")
 
     size = out.stat().st_size
-    print(f"site:    {site}")
+    print(f"out:     {site}")
     print(f"data:    {out}  ({size/1e6:.2f} MB, gzip ~1.8 MB)")
     print(f"tags:    {len(payload['tags'])}")
     print(f"entries: {len(payload['entries'])}")

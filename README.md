@@ -5,11 +5,11 @@
 спряжение).
 
 ```
-10 862 словарные статьи
-10 537 уникальных лемм
-83 545 переводов (ru, en, de, lt, lv, pl)
-303 751 запись о словоформах
-150 262 уникальные словоформы
+10 864 словарные статьи
+10 539 уникальных лемм
+83 555 переводов (ru, en, de, lt, lv, pl)
+303 834 записи о словоформах
+150 300 уникальных словоформ
 ```
 
 ## Быстрый старт
@@ -110,7 +110,7 @@ cp /tmp/wirdeins/twanksta/nvh/full.nvh data/full.nvh
 нужны в словаре. `build_data.py` подмешивает их при сборке; если такая же
 лемма позже появится в исходнике, дополнение пропускается (дубликата не будет).
 
-Сейчас в файле одна статья:
+Сейчас в файле три статьи:
 
 - **ermērisnas** — отглагольное существительное женского рода (суффикс
   `-sna-`, парадигма 45) от `ermēritun` «придумать, выдумать» (корень
@@ -119,6 +119,16 @@ cp /tmp/wirdeins/twanksta/nvh/full.nvh data/full.nvh
   Формы: `ermērisnas` (sg.nom / pl.nom / sg.gen), `ermērisnan` (sg.acc /
   pl.gen), `ermērisnai` (sg.dat), `ermērisnamans` (pl.dat),
   `ermērisnans` (pl.acc).
+- **saulīka** — «солнышко» (жен. род, парадигма 45; lt. *saulutė*,
+  lv. *saulīte*, pl. *słoneczko*, de. *Sonnchen*, en. *little sun*).
+  Фольклорная фиксация из Пиктупенена, песня «Mīniks saulīkan weddi»
+  («Месяц на солнышке женился/-тся»). Формы: `saulīka`, `saulīkas`
+  (sg.gen / pl.nom), `saulīkai`, `saulīkan`, `saulīkamans`, `saulīkans`.
+- **teutōtisks** — «тевтонский; тевтонец» (прилагательное, парадигма 25,
+  вариант `teutōtiskas`), из `[Ordo Teutonicus drv]`. Полная парадигма:
+  24 положительные формы, 24 сравнительные, 24 превосходные и 3 наречия
+  (всего 75), включая `ukateutōtiskais`. Переводы: ru, de, en
+  (в источнике lt/lv/pl не заполнены).
 
 ### Ограничения
 
@@ -159,9 +169,16 @@ cd site && python3 -m http.server 8080   # локальная проверка
 CDN обоих хостингов отдаёт JSON с gzip/brotli, то есть реальная загрузка —
 около 1,8 МБ. Индексация в браузере занимает ~1 с, память ~70 МБ.
 
-**GitHub Pages:** собрать `site/`, положить его содержимое в корень
-репозитория (или в ветку `gh-pages`), затем *Settings → Pages → Deploy from a
-branch* и выбрать ветку/`root`. Пустой `.nojekyll` создаётся автоматически.
+**GitHub Pages:** собрать сразу в корень репозитория, чтобы не копировать
+файлы вручную и не забыть `data/dictionary.json`:
+
+```bash
+python3 scripts/build_static.py --out /путь/к/репозиторию
+```
+
+затем *Settings → Pages → Deploy from a branch*, ветка `main`, папка `/ (root)`.
+Пустой `.nojekyll` создаётся автоматически. Папку `site/` в репозиторий
+класть не нужно — она только для локального предпросмотра.
 
 **Cloudflare Pages:** подключить репозиторий с build command
 `python3 scripts/build_static.py` и output directory `site`, либо загрузить
