@@ -22,6 +22,20 @@ python3 server.py
 
 Нужен только Python 3.11+ (стандартная библиотека, без зависимостей).
 
+На macOS сервер можно держать постоянно как LaunchAgent (запуск при входе
+в систему и перезапуск после падения). Готовый файл —
+`~/Library/LaunchAgents/org.prussian.translator.server.plist`, лог —
+`~/Library/Logs/prussian-server.log`.
+
+```bash
+# состояние
+launchctl print gui/$(id -u)/org.prussian.translator.server | head
+# остановить
+launchctl bootout gui/$(id -u)/org.prussian.translator.server
+# снова включить
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/org.prussian.translator.server.plist
+```
+
 Или из командной строки:
 
 ```bash
