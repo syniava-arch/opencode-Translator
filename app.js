@@ -8,7 +8,7 @@
 (() => {
   "use strict";
 
-  const DATA_URL = "data/dictionary.json?v=e12f9ef51b";
+  const DATA_URL = "data/dictionary.json?v=382ff1d3e8";
   const LANGS = ["ru", "en", "de", "lt", "lv", "pl"];
   const LANGSET = new Set(LANGS);
 
@@ -415,8 +415,12 @@
   const TOKEN_RE = /\p{L}+(?:['’\-]\p{L}+)*/gu;
 
   function gloss(text, src = "prs", dst = "ru") {
-    if (!LANGSET.has(dst)) dst = "ru";
     if (src !== "prs" && !LANGSET.has(src)) src = "prs";
+    if (src === "prs") {
+      if (!LANGSET.has(dst)) dst = "ru";
+    } else {
+      dst = "prs";
+    }
     const out = [];
     let pos = 0;
     if (src === "prs") {

@@ -278,7 +278,7 @@
   </footer>
 </div>
 
-<script src="app.js?v=e12f9ef51b"></script>
+<script src="app.js?v=382ff1d3e8"></script>
 <script>
 const LANGS = {ru:"Русский", en:"English", de:"Deutsch", lt:"Lietuvių", lv:"Latviešu", pl:"Polski"};
 const state = {lang:"ru", q:"", results:[], active:-1, sug:[]};
@@ -463,18 +463,17 @@ function renderParadigm(e){
   }).join("");
 }
 
-document.querySelectorAll(".lang").forEach(b => b.onclick = () => {});
-
 /* ── text glossing ──────────────────────────────────────────────────────── */
 const srcSel = $("#src"), dstSel = $("#dst");
 function fillDst(){
   const src = srcSel.value;
-  dstSel.innerHTML = Object.entries(LANGS).filter(([c]) => c !== src)
-    .map(([c,n]) => `<option value="${c}" ${c==="ru"&&src!=="ru"?"selected":""}>${n}</option>`).join("");
+  // Прусский — только цель обратного перевода; из прусского переводим на LANGS.
+  const opts = src === "prs" ? Object.entries(LANGS) : [["prs", "Прусский"]];
+  dstSel.innerHTML = opts
+    .map(([c,n]) => `<option value="${c}" ${src==="prs"&&c==="ru"?"selected":""}>${n}</option>`).join("");
+  dstSel.title = src === "prs" ? "Язык перевода" : "Обратный перевод на прусский";
 }
 srcSel.onchange = fillDst; fillDst();
-
-function direction(){ return srcSel.value === "prs" ? "prs" : srcSel.value; }
 
 $("#gloss-go").onclick = async () => {
   const text = $("#text").value.trim();
